@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Avatar from "@/components/Avatar";
+import CreatorTile from "@/components/CreatorTile";
 import VideoCard from "@/components/VideoCard";
 import { getCreators, getLatestVideos } from "@/lib/data";
 import { compact } from "@/lib/format";
@@ -32,17 +32,15 @@ export default async function Home() {
       <section className="block">
         <div className="block-head">
           <h2>Creators</h2>
-          <Link href="/fortnite-youtubers-nederland">Bekijk de ranglijst</Link>
+          <Link href="/creators">Zoek een creator</Link>
         </div>
         <div className="creator-grid">
           {creators.map((c) => (
-            <Link key={c.slug} href={`/creators/${c.slug}`} className="creator-chip">
-              <Avatar creator={c} size={44} />
-              <span>
-                <strong>{c.name ?? c.handle}</strong>
-                <small>{c.subscribers_hidden ? "abonnees verborgen" : `${compact(c.subscriber_count)} abonnees`}</small>
-              </span>
-            </Link>
+            <CreatorTile
+              key={c.slug}
+              creator={c}
+              detail={c.subscribers_hidden ? "abonnees verborgen" : `${compact(c.subscriber_count)} abonnees`}
+            />
           ))}
         </div>
       </section>

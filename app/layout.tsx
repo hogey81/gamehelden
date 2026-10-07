@@ -36,7 +36,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Link>
             <nav>
               <Link href="/">Nieuwste video&apos;s</Link>
+              <Link href="/creators">Creators zoeken</Link>
               <Link href="/fortnite-youtubers-nederland">Fortnite-ranglijst</Link>
+              <Link href="/favorieten">Mijn favorieten</Link>
             </nav>
           </div>
         </header>

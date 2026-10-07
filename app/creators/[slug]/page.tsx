@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Avatar from "@/components/Avatar";
 import CopyField from "@/components/CopyField";
+import FavButton from "@/components/FavButton";
 import Player from "@/components/Player";
 import VideoCard from "@/components/VideoCard";
 import { getCreator, getCreators, getLatestVideos, getPopularVideos } from "@/lib/data";
@@ -54,9 +55,12 @@ export default async function CreatorPage({ params, searchParams }: Props) {
             {creator.region && <span className="chip">{creator.region}</span>}
             <a className="chip" href={`https://www.youtube.com/${creator.handle}`}>Bekijk op YouTube</a>
           </div>
+          <div className="actions">
           <a className="subscribe" href={subscribeUrl}>
             <span aria-hidden>▶</span> Abonneer op {name}
           </a>
+          <FavButton slug={creator.slug} name={name} withLabel />
+          </div>
         </div>
       </section>
 

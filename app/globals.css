@@ -128,3 +128,12 @@ aside.col { gap: 16px; margin-top: 36px; }
 .setup li:last-child { border-bottom: 0; padding-bottom: 0; }
 .setup small { display: block; color: var(--muted); font-size: 12px; }
 .btn { background: var(--accent); color: var(--on-accent) !important; font-weight: 600; font-size: 13px; padding: 6px 12px; border-radius: 8px; text-decoration: none; white-space: nowrap; }
+
+.subscribe { justify-self: start; display: inline-flex; align-items: center; gap: 8px; background: #CC0000; color: #FFFFFF; font-weight: 700; font-size: 15px; padding: 10px 18px; border-radius: 999px; text-decoration: none; }
+.subscribe:hover { background: #A80000; }
+.badge-panel img { width: auto; max-width: 100%; }
+.copy { display: grid; gap: 6px; }
+.copy label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.copy-row { display: flex; gap: 8px; align-items: start; }
+.copy textarea { flex: 1; min-width: 0; resize: none; font: 13px/1.4 ui-monospace, Menlo, monospace; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 8px; }
+.copy .btn { border: 0; cursor: pointer; font-family: inherit; padding-block: 9px; }

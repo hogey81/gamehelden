@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Avatar from "@/components/Avatar";
+import CopyField from "@/components/CopyField";
 import Player from "@/components/Player";
 import VideoCard from "@/components/VideoCard";
 import { getCreator, getCreators, getLatestVideos, getPopularVideos } from "@/lib/data";
-import { compact } from "@/lib/format";
+import { SITE_URL, compact } from "@/lib/format";
 import { GAMES } from "@/lib/types";
 
 export const revalidate = 3600;
@@ -36,6 +37,11 @@ export default async function CreatorPage({ params, searchParams }: Props) {
   const rank = all.findIndex((c) => c.slug === slug) + 1;
   const similar = all.filter((c) => c.slug !== slug && c.games.some((g) => creator.games.includes(g))).slice(0, 4);
   const now = Date.now();
+  // ?sub_confirmation=1 opens YouTube's own "subscribe?" dialog straight away.
+  const subscribeUrl = creator.channel_id
+    ? `https://www.youtube.com/channel/${creator.channel_id}?sub_confirmation=1`
+    : `https://www.youtube.com/${creator.handle}?sub_confirmation=1`;
+  const pageUrl = `${SITE_URL}/creators/${creator.slug}`;
 
   return (
     <>
@@ -46,8 +52,11 @@ export default async function CreatorPage({ params, searchParams }: Props) {
           <div className="chips">
             {creator.games.map((g) => <span key={g} className="chip">{GAMES[g] ?? g}</span>)}
             {creator.region && <span className="chip">{creator.region}</span>}
-            <a className="chip chip-link" href={`https://www.youtube.com/${creator.handle}`}>Bekijk op YouTube</a>
+            <a className="chip" href={`https://www.youtube.com/${creator.handle}`}>Bekijk op YouTube</a>
           </div>
+          <a className="subscribe" href={subscribeUrl}>
+            <span aria-hidden>▶</span> Abonneer op {name}
+          </a>
         </div>
       </section>
 
@@ -131,6 +140,15 @@ export default async function CreatorPage({ params, searchParams }: Props) {
               </ul>
             </section>
           )}
+          <section className="panel badge-panel">
+            <h2>Ben jij {name}?</h2>
+            <p>Laat je kijkers weten dat je op Gamehelden staat. Zet deze regel in je YouTube-beschrijving of kanaalinfo:</p>
+            <CopyField label="Tekst voor YouTube" value={`🎮 Ik sta op Gamehelden, de site met Nederlandse gaming-YouTubers: ${pageUrl}`} />
+            <p>Of gebruik de badge op je eigen site, Twitch-panel of stream:</p>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`/badge/${creator.slug}`} alt={`${name} staat op Gamehelden`} height={56} />
+            <CopyField label="Code voor je website" value={`<a href="${pageUrl}"><img src="${SITE_URL}/badge/${creator.slug}" alt="${name} staat op Gamehelden" height="56"></a>`} />
+          </section>
         </aside>
       </div>
     </>

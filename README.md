@@ -13,7 +13,7 @@ Zonder instellingen draait de site met duidelijk gemarkeerde voorbeelddata en ho
 
 ## Een creator toevoegen
 
-Voeg in Supabase (Table Editor > creators) een rij toe met `slug`, `handle` (bijv. `@ehvgaming`) en `games` (bijv. `{fortnite}`). De volgende sync vult de rest. Eigen tekst gaat in `bio`, de setup in `setup` als JSON:
+Voeg in Supabase (Table Editor > creators) een rij toe met `slug`, `handle` (bijv. `@EHVgaming1`) en `games` (bijv. `{fortnite}`). De volgende sync vult de rest. Eigen tekst gaat in `bio`, de setup in `setup` als JSON:
 
 ```json
 [{ "label": "Headset", "name": "Merk Model", "url": "https://jouw-affiliate-link" }]

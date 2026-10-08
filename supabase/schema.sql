@@ -5,7 +5,7 @@
 
 create table if not exists creators (
   slug text primary key,                 -- used in the URL: /creators/<slug>
-  handle text not null unique,           -- YouTube handle, e.g. @ehvgaming
+  handle text not null unique,           -- YouTube handle, e.g. @EHVgaming1
   games text[] not null default '{fortnite}',
   region text,                           -- shown on the page, e.g. 'Eindhoven'
   bio text,                              -- your own text; the page shows it as written
@@ -50,5 +50,5 @@ create policy "public read" on videos for select using (true);
 
 -- Start with your own channel. Add more creators the same way.
 insert into creators (slug, handle, games, region)
-values ('ehvgaming', '@ehvgaming', '{fortnite,ea-fc}', 'Eindhoven')
+values ('ehvgaming', '@EHVgaming1', '{fortnite,ea-fc}', 'Eindhoven')
 on conflict (slug) do nothing;

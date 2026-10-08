@@ -34,4 +34,5 @@ export const GAMES: Record<string, string> = {
   minecraft: "Minecraft",
   gta: "GTA",
   cod: "Call of Duty",
+  roblox: "Roblox",
 };

@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const c = await getCreator((await params).slug);
   if (!c) return {};
   const name = c.name ?? c.handle;
-  const games = c.games.map((g) => GAMES[g] ?? g).join(" en ");
+  const games = c.games.map((g) => GAMES[g] ?? g).join(" en ") || "gaming";
   return {
     title: `${name}: Nederlandse ${games} YouTuber`,
     description: `Alles over ${name}: nieuwste video's, populairste video's, statistieken en gaming setup.`,

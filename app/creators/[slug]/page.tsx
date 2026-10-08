@@ -8,7 +8,7 @@ import Player from "@/components/Player";
 import VideoCard from "@/components/VideoCard";
 import { getCreator, getCreators, getLatestVideos, getPopularVideos } from "@/lib/data";
 import { SITE_URL, compact } from "@/lib/format";
-import { GAMES } from "@/lib/types";
+import { GAMES, rankingPath } from "@/lib/types";
 
 export const revalidate = 3600;
 
@@ -35,7 +35,13 @@ export default async function CreatorPage({ params, searchParams }: Props) {
   const [latest, popular, all] = await Promise.all([getLatestVideos(8, slug), getPopularVideos(slug, 4), getCreators()]);
   const name = creator.name ?? creator.handle;
   const featured = latest.find((x) => x.id === v) ?? latest[0];
-  const rank = all.findIndex((c) => c.slug === slug) + 1;
+  // Place in each of this creator's game rankings (all is sorted by subscribers).
+  const ranks = creator.games
+    .filter((g) => g in GAMES)
+    .map((g) => {
+      const list = all.filter((c) => c.games.includes(g));
+      return { g, rank: list.findIndex((c) => c.slug === slug) + 1, of: list.length };
+    });
   const similar = all.filter((c) => c.slug !== slug && c.games.some((g) => creator.games.includes(g))).slice(0, 4);
   const now = Date.now();
   // ?sub_confirmation=1 opens YouTube's own "subscribe?" dialog straight away.
@@ -105,13 +111,18 @@ export default async function CreatorPage({ params, searchParams }: Props) {
         </div>
 
         <aside className="col">
-          {rank > 0 && (
+          {ranks.length > 0 && (
             <section className="panel">
-              <h2>Ranglijst</h2>
-              <p>
-                Nummer <strong>{rank}</strong> van {all.length} op Gamehelden, gemeten in abonnees.{" "}
-                <Link href="/fortnite-youtubers-nederland">Bekijk de lijst</Link>
-              </p>
+              <h2>Ranglijsten</h2>
+              <ul className="ranks">
+                {ranks.map(({ g, rank, of }) => (
+                  <li key={g}>
+                    <Link href={rankingPath(g)}>{GAMES[g]}</Link>
+                    <span>nummer <strong>{rank}</strong> van {of}</span>
+                  </li>
+                ))}
+              </ul>
+              <p><small>Gemeten in abonnees op YouTube.</small></p>
             </section>
           )}
 

@@ -37,7 +37,7 @@ export default function CreatorSearch({ creators }: { creators: Creator[] }) {
       </div>
 
       {hits.length === 0 ? (
-        <p className="empty">Geen creator gevonden voor &quot;{q}&quot;. Staat je favoriet er nog niet op? Laat het ons weten.</p>
+        <p className="empty">Geen creator gevonden voor &quot;{q}&quot;. Staat je favoriet er nog niet op? Een creator kan zich <a href="/aanmelden">hier aanmelden</a>.</p>
       ) : (
         <div className="creator-grid">
           {hits.map((c) => (

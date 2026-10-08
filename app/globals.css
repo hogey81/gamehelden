@@ -159,3 +159,43 @@ button.chip { border: 0; cursor: pointer; font-family: inherit; }
 button.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
 .empty { color: var(--muted); margin: 0; }
 .empty-state { margin-top: 24px; max-width: 640px; }
+
+.ranks { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.ranks li { display: flex; justify-content: space-between; gap: 12px; }
+.ranks span { color: var(--muted); }
+.ranks strong { color: var(--ink); }
+.panel small { color: var(--muted); }
+a.chip:hover { color: var(--ink); }
+.game-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+.game-card { display: grid; gap: 4px; padding: 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); text-decoration: none; }
+.game-card strong { font: 800 22px var(--display); letter-spacing: -0.02em; }
+.game-card small { color: var(--muted); }
+.game-card:hover { border-color: var(--accent); }
+
+.signup-wrap { max-width: 640px; }
+.signup { gap: 18px; }
+.field { display: grid; gap: 6px; border: 0; padding: 0; margin: 0; min-width: 0; }
+.field label, .field legend { font-weight: 600; padding: 0; margin-bottom: 6px; }
+.field input, .field textarea { font: 16px var(--body); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; width: 100%; }
+.field input:focus, .field textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.check-chip { display: inline-flex; align-items: center; gap: 6px; background: var(--chip); border-radius: 999px; padding: 6px 12px; font-size: 14px; font-weight: 600; cursor: pointer; }
+.check-chip:has(input:checked) { background: var(--ink); color: var(--bg); }
+.check-chip input { margin: 0; }
+.owner { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: var(--muted); }
+.owner input { margin-top: 3px; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.btn.big { justify-self: start; border: 0; cursor: pointer; font: 700 16px var(--body); padding: 12px 22px; border-radius: 10px; }
+.btn:disabled { opacity: 0.6; cursor: wait; }
+.notice { margin: 0; }
+.notice.error { color: #C2410C; font-weight: 600; }
+.notice.ok { font-weight: 600; max-width: 640px; }
+nav a.nav-cta { background: var(--accent); color: var(--on-accent); }
+nav a.nav-cta:hover { background: var(--accent); color: var(--on-accent); opacity: .9; }
+.empty a { color: var(--accent); }
+.check-chip { white-space: nowrap; }
+@media (max-width: 640px) {
+  .site-header { position: static; }
+  nav { margin-left: 0; flex-wrap: nowrap; overflow-x: auto; width: 100%; }
+  nav a { white-space: nowrap; }
+}
+.field .check-chip { padding: 7px 14px; margin: 0; font-weight: 600; }

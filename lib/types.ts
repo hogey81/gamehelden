@@ -36,3 +36,11 @@ export const GAMES: Record<string, string> = {
   cod: "Call of Duty",
   roblox: "Roblox",
 };
+
+// Every game gets a ranking at /<game>-youtubers-nederland, e.g. /minecraft-youtubers-nederland.
+export const rankingPath = (game: string) => `/${game}-youtubers-nederland`;
+
+export function gameFromRankingSlug(slug: string): string | null {
+  const m = slug.match(/^(.+)-youtubers-nederland$/);
+  return m && m[1] in GAMES ? m[1] : null;
+}

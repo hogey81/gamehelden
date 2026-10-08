@@ -22,7 +22,7 @@ export const DEMO_CREATORS: Creator[] = [
   {
     ...base,
     slug: "ehvgaming",
-    handle: "@ehvgaming",
+    handle: "@EHVgaming1",
     name: "EHVgaming",
     games: ["fortnite", "ea-fc"],
     region: "Eindhoven",

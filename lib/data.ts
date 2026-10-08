@@ -68,3 +68,22 @@ export async function getPopularVideos(creatorSlug: string, limit: number): Prom
   if (error) throw error;
   return data as Video[];
 }
+
+// The newest videos of a set of creators together, however old (used for favourites).
+export async function getVideosFor(slugs: string[], limit: number): Promise<Video[]> {
+  if (slugs.length === 0) return [];
+  const sb = db();
+  if (!sb) {
+    return DEMO_VIDEOS.filter((v) => slugs.includes(v.creator_slug))
+      .sort((a, b) => b.published_at.localeCompare(a.published_at))
+      .slice(0, limit);
+  }
+  const { data, error } = await sb
+    .from("videos")
+    .select("*")
+    .in("creator_slug", slugs)
+    .order("published_at", { ascending: false })
+    .limit(limit);
+  if (error) throw error;
+  return data as Video[];
+}

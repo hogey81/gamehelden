@@ -3,14 +3,14 @@
 import Link from "next/link";
 import { useState } from "react";
 import VideoCard from "@/components/VideoCard";
-import { useFavorites } from "@/lib/favorites";
-import type { Creator, Video } from "@/lib/types";
+import { useFavoriteVideos } from "@/lib/favorites";
+import type { Creator } from "@/lib/types";
 
 // On the homepage, the newest videos of the visitor's own favourites come first.
-export default function HomeFavorites({ creators, videos }: { creators: Creator[]; videos: Video[] }) {
-  const favs = useFavorites();
+export default function HomeFavorites({ creators }: { creators: Creator[] }) {
+  const videos = useFavoriteVideos(4);
   const [now] = useState(() => Date.now());
-  const feed = videos.filter((v) => favs.includes(v.creator_slug)).slice(0, 4);
+  const feed = videos ?? [];
   if (feed.length === 0) return null;
   const bySlug = new Map(creators.map((c) => [c.slug, c]));
   return (

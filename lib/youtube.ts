@@ -64,7 +64,7 @@ export async function channelsById(ids: string[]): Promise<Channel[]> {
   return out;
 }
 
-export async function recentUploadIds(playlistId: string, max = 15): Promise<string[]> {
+export async function recentUploadIds(playlistId: string, max = 25): Promise<string[]> {
   const r = await get<{ items?: { contentDetails: { videoId: string } }[] }>("playlistItems", {
     part: "contentDetails",
     playlistId,

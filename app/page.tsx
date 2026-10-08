@@ -8,7 +8,7 @@ import { compact } from "@/lib/format";
 export const revalidate = 3600;
 
 export default async function Home() {
-  const [creators, videos] = await Promise.all([getCreators(), getLatestVideos(200)]);
+  const [creators, videos] = await Promise.all([getCreators(), getLatestVideos(12)]);
   const bySlug = new Map(creators.map((c) => [c.slug, c]));
   const now = Date.now();
 
@@ -21,12 +21,12 @@ export default async function Home() {
         </p>
       </section>
 
-      <HomeFavorites creators={creators} videos={videos} />
+      <HomeFavorites creators={creators} />
 
       <section className="block">
         <h2>Nieuwste video&apos;s</h2>
         <div className="video-grid">
-          {videos.slice(0, 12).map((v) => (
+          {videos.map((v) => (
             <VideoCard key={v.id} video={v} creator={bySlug.get(v.creator_slug)} now={now} />
           ))}
         </div>

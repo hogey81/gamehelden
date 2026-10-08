@@ -1,6 +1,7 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
+import type { Video } from "@/lib/types";
 
 // Favourite creators live only in this visitor's browser: no account, nothing sent to us.
 const KEY = "gamehelden-favorieten";
@@ -52,4 +53,23 @@ export function toggleFavorite(slug: string, name = slug): boolean {
   write(added ? [...now, slug] : now.filter((s) => s !== slug));
   window.dispatchEvent(new CustomEvent<FavEvent>(FAV_EVENT, { detail: { slug, name, added } }));
   return added;
+}
+
+// Newest videos of the visitor's favourites, fetched whenever the favourites change.
+// null while loading.
+export function useFavoriteVideos(limit: number): Video[] | null {
+  const favs = useFavorites();
+  const key = [...favs].sort().join(",");
+  const [state, setState] = useState<{ key: string; videos: Video[] } | null>(null);
+  useEffect(() => {
+    if (!key) return;
+    let live = true;
+    fetch(`/api/videos?creators=${encodeURIComponent(key)}&limit=${limit}`)
+      .then((r) => (r.ok ? r.json() : []))
+      .catch(() => [])
+      .then((videos: Video[]) => live && setState({ key, videos }));
+    return () => { live = false; };
+  }, [key, limit]);
+  if (!key) return [];
+  return state?.key === key ? state.videos : null;
 }

@@ -206,3 +206,14 @@ nav .count { display: inline-grid; place-items: center; min-width: 20px; height:
 .toast a { color: #FFB380; font-weight: 700; white-space: nowrap; }
 @keyframes toast-in { from { transform: translateY(12px); opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .toast { animation: none; } }
+
+/* Video list with an ad column on the left; on small screens the ad sits above the videos. */
+.with-ad { display: grid; gap: 18px; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); align-items: start; }
+.with-ad > .ad { position: sticky; top: 80px; }
+.ad { display: grid; gap: 4px; justify-items: center; }
+.ad-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.ad img { height: auto; }
+@media (max-width: 800px) {
+  .with-ad { grid-template-columns: minmax(0, 1fr); }
+  .with-ad > .ad { position: static; }
+}

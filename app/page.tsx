@@ -1,4 +1,5 @@
 import Link from "next/link";
+import AdBanner from "@/components/AdBanner";
 import CreatorTile from "@/components/CreatorTile";
 import HomeFavorites from "@/components/HomeFavorites";
 import VideoCard from "@/components/VideoCard";
@@ -25,10 +26,13 @@ export default async function Home() {
 
       <section className="block">
         <h2>Nieuwste video&apos;s</h2>
-        <div className="video-grid">
-          {videos.map((v) => (
-            <VideoCard key={v.id} video={v} creator={bySlug.get(v.creator_slug)} now={now} />
-          ))}
+        <div className="with-ad">
+          <AdBanner />
+          <div className="video-grid">
+            {videos.map((v) => (
+              <VideoCard key={v.id} video={v} creator={bySlug.get(v.creator_slug)} now={now} />
+            ))}
+          </div>
         </div>
       </section>
 

@@ -26,6 +26,11 @@ export default function Privacy() {
         Sommige links naar producten zijn affiliate-links. Koop je via zo&apos;n link iets, dan ontvangen wij een kleine
         commissie. Voor jou verandert de prijs niet.
       </p>
+      <p>
+        Naast de video&apos;s staat een advertentie van Coolblue. Die wordt geladen via Awin, het affiliate-netwerk van
+        Coolblue. Awin kan daarbij cookies plaatsen om te zien dat een aankoop via Gamehelden kwam; daarvoor geldt het{" "}
+        <a href="https://www.awin.com/nl/privacybeleid">privacybeleid van Awin</a>.
+      </p>
       <h2>Vragen of verwijderen</h2>
       <p>Ben je creator en wil je niet op Gamehelden staan, of klopt er iets niet? Neem contact met ons op, dan passen we het aan.</p>
     </section>

@@ -27,7 +27,7 @@ export default function Privacy() {
         commissie. Voor jou verandert de prijs niet.
       </p>
       <p>
-        Naast de video&apos;s staat een advertentie van Coolblue. Die wordt geladen via Awin, het affiliate-netwerk van
+        Onderaan elke pagina staat een advertentie van Coolblue. Die wordt geladen via Awin, het affiliate-netwerk van
         Coolblue. Awin kan daarbij cookies plaatsen om te zien dat een aankoop via Gamehelden kwam; daarvoor geldt het{" "}
         <a href="https://www.awin.com/nl/privacybeleid">privacybeleid van Awin</a>.
       </p>

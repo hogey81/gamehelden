@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { Bricolage_Grotesque, Figtree } from "next/font/google";
+import AdBanner from "@/components/AdBanner";
 import FavNavLink from "@/components/FavNavLink";
 import FavToast from "@/components/FavToast";
 import { isDemo } from "@/lib/data";
@@ -49,6 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <FavToast />
         <footer className="site-footer">
           <div className="wrap">
+            <AdBanner />
             <p>
               Video&apos;s en kanaalgegevens komen via de YouTube API. Gamehelden is niet verbonden aan YouTube of Epic Games. Zie
               de <a href="https://www.youtube.com/t/terms">Servicevoorwaarden van YouTube</a> en ons{" "}

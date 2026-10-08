@@ -1,6 +1,6 @@
-// Coolblue banner via Awin. Shown left of the video lists; labelled so visitors can tell it is an ad.
-const LINK = "https://www.awin1.com/cread.php?s=3909535&v=85161&q=516163&r=2828020";
-const IMAGE = "https://www.awin1.com/cshow.php?s=3909535&v=85161&q=516163&r=2828020";
+// Coolblue banner via Awin. Shown at the bottom of every page, in the footer; labelled so visitors can tell it is an ad.
+const LINK = "https://www.awin1.com/cread.php?s=3909520&v=85161&q=516163&r=2828020";
+const IMAGE = "https://www.awin1.com/cshow.php?s=3909520&v=85161&q=516163&r=2828020";
 
 export default function AdBanner() {
   return (

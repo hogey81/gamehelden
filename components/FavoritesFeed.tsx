@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import AdBanner from "@/components/AdBanner";
 import CreatorTile from "@/components/CreatorTile";
 import VideoCard from "@/components/VideoCard";
 import { useFavoriteVideos, useFavorites } from "@/lib/favorites";
@@ -45,11 +44,8 @@ export default function FavoritesFeed({ creators }: { creators: Creator[] }) {
         ) : feed.length === 0 ? (
           <p className="empty">We hebben nog geen video&apos;s van je favorieten. Die komen na de volgende dagelijkse update.</p>
         ) : (
-          <div className="with-ad">
-            <AdBanner />
-            <div className="video-grid">
-              {feed.map((v) => <VideoCard key={v.id} video={v} creator={bySlug.get(v.creator_slug)} now={now} />)}
-            </div>
+          <div className="video-grid">
+            {feed.map((v) => <VideoCard key={v.id} video={v} creator={bySlug.get(v.creator_slug)} now={now} />)}
           </div>
         )}
       </section>

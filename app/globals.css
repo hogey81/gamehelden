@@ -139,7 +139,7 @@ aside.col { gap: 16px; margin-top: 36px; }
 .copy .btn { border: 0; cursor: pointer; font-family: inherit; padding-block: 9px; }
 
 .creator-chip { position: relative; }
-.creator-chip > span { flex: 1; min-width: 0; }
+.creator-chip > span:not(.avatar) { flex: 1; min-width: 0; }
 .stretched { text-decoration: none; }
 .stretched::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
 .creator-chip:has(.stretched:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
@@ -199,3 +199,10 @@ nav a.nav-cta:hover { background: var(--accent); color: var(--on-accent); opacit
   nav a { white-space: nowrap; }
 }
 .field .check-chip { padding: 7px 14px; margin: 0; font-weight: 600; }
+
+nav .count { display: inline-grid; place-items: center; min-width: 20px; height: 20px; margin-left: 6px; padding: 0 6px; border-radius: 999px; background: #D6336C; color: #FFFFFF; font-size: 12px; font-weight: 700; }
+.toast-slot { position: fixed; left: 0; right: 0; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: grid; justify-items: center; pointer-events: none; z-index: 20; padding-inline: 16px; }
+.toast { pointer-events: auto; display: flex; gap: 16px; align-items: center; max-width: 100%; background: var(--ink); color: var(--bg); padding: 12px 18px; border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); font-size: 15px; animation: toast-in 0.2s ease-out; }
+.toast a { color: #FFB380; font-weight: 700; white-space: nowrap; }
+@keyframes toast-in { from { transform: translateY(12px); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .toast { animation: none; } }

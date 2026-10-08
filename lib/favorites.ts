@@ -42,7 +42,14 @@ export function useFavorites(): string[] {
   return useSyncExternalStore(subscribe, read, () => EMPTY);
 }
 
-export function toggleFavorite(slug: string) {
+export type FavEvent = { slug: string; name: string; added: boolean };
+export const FAV_EVENT = "gamehelden:favoriet";
+
+// Returns true when the creator was added. Announces the change so the toast can show it.
+export function toggleFavorite(slug: string, name = slug): boolean {
   const now = read();
-  write(now.includes(slug) ? now.filter((s) => s !== slug) : [...now, slug]);
+  const added = !now.includes(slug);
+  write(added ? [...now, slug] : now.filter((s) => s !== slug));
+  window.dispatchEvent(new CustomEvent<FavEvent>(FAV_EVENT, { detail: { slug, name, added } }));
+  return added;
 }

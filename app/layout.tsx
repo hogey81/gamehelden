@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { Bricolage_Grotesque, Figtree } from "next/font/google";
+import FavNavLink from "@/components/FavNavLink";
+import FavToast from "@/components/FavToast";
 import { isDemo } from "@/lib/data";
 import { SITE_URL } from "@/lib/format";
 import "./globals.css";
@@ -38,12 +40,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Link href="/">Nieuwste video&apos;s</Link>
               <Link href="/creators">Creators zoeken</Link>
               <Link href="/ranglijsten">Ranglijsten</Link>
-              <Link href="/favorieten">Mijn favorieten</Link>
+              <FavNavLink />
               <Link href="/aanmelden" className="nav-cta">Kanaal aanmelden</Link>
             </nav>
           </div>
         </header>
         <main className="wrap page">{children}</main>
+        <FavToast />
         <footer className="site-footer">
           <div className="wrap">
             <p>

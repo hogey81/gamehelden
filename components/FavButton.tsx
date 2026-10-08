@@ -13,7 +13,7 @@ export default function FavButton({ slug, name, withLabel = false }: { slug: str
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        toggleFavorite(slug);
+        toggleFavorite(slug, name);
       }}
     >
       <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import CreatorTile from "@/components/CreatorTile";
+import LiveBar from "@/components/LiveBar";
 import HomeFavorites from "@/components/HomeFavorites";
 import VideoCard from "@/components/VideoCard";
 import { getCreators, getLatestVideos } from "@/lib/data";
@@ -20,6 +21,8 @@ export default async function Home() {
           Fortnite en meer van {creators.length} Nederlandse en Vlaamse creators op één plek. Elke dag automatisch bijgewerkt.
         </p>
       </section>
+
+      <LiveBar />
 
       <HomeFavorites creators={creators} />
 

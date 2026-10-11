@@ -118,3 +118,29 @@ export async function videosById(ids: string[]): Promise<VideoInfo[]> {
   }
   return out;
 }
+
+export type LiveInfo = { id: string; title: string; thumbnail_url: string | null; started_at: string | null };
+
+// Of these video ids, the ones that are streaming right now.
+export async function liveNow(ids: string[]): Promise<LiveInfo[]> {
+  const out: LiveInfo[] = [];
+  for (let i = 0; i < ids.length; i += 50) {
+    const r = await get<{
+      items?: {
+        id: string;
+        snippet: { title: string; thumbnails: Thumbs; liveBroadcastContent?: string };
+        liveStreamingDetails?: { actualStartTime?: string };
+      }[];
+    }>("videos", { part: "snippet,liveStreamingDetails", id: ids.slice(i, i + 50).join(",") });
+    for (const v of r.items ?? []) {
+      if (v.snippet.liveBroadcastContent !== "live") continue;
+      out.push({
+        id: v.id,
+        title: v.snippet.title,
+        thumbnail_url: bestThumb(v.snippet.thumbnails),
+        started_at: v.liveStreamingDetails?.actualStartTime ?? null,
+      });
+    }
+  }
+  return out;
+}

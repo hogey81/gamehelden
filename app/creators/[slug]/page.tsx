@@ -4,8 +4,11 @@ import { notFound } from "next/navigation";
 import Avatar from "@/components/Avatar";
 import CopyField from "@/components/CopyField";
 import FavButton from "@/components/FavButton";
+import LiveNow from "@/components/LiveNow";
 import Player from "@/components/Player";
+import SupportCode from "@/components/SupportCode";
 import VideoCard from "@/components/VideoCard";
+import { setupLink } from "@/lib/affiliate";
 import { getCreator, getCreators, getLatestVideos, getPopularVideos } from "@/lib/data";
 import { SITE_URL, compact } from "@/lib/format";
 import { GAMES, rankingPath } from "@/lib/types";
@@ -79,6 +82,8 @@ export default async function CreatorPage({ params, searchParams }: Props) {
 
       <div className="two-col">
         <div className="col">
+          <LiveNow slug={creator.slug} />
+
           {featured && (
             <section id="speler" className="block">
               <Player id={featured.id} title={featured.title} thumbnail={featured.thumbnail_url} />
@@ -111,6 +116,8 @@ export default async function CreatorPage({ params, searchParams }: Props) {
         </div>
 
         <aside className="col">
+          {creator.support_code && <SupportCode code={creator.support_code} name={name} />}
+
           {ranks.length > 0 && (
             <section className="panel">
               <h2>Ranglijsten</h2>
@@ -130,13 +137,17 @@ export default async function CreatorPage({ params, searchParams }: Props) {
             <section className="panel">
               <h2>Gaming setup</h2>
               <ul className="setup">
-                {creator.setup.map((s) => (
-                  <li key={s.label}>
-                    <span><small>{s.label}</small>{s.name}</span>
-                    {s.url && <a className="btn" href={s.url} rel="sponsored nofollow">Bekijk prijs</a>}
-                  </li>
-                ))}
+                {creator.setup.map((s) => {
+                  const link = setupLink(s, creator.slug);
+                  return (
+                    <li key={s.label}>
+                      <span><small>{s.label}</small>{s.name}</span>
+                      <a className="btn" href={link.href} rel="sponsored nofollow noopener" target="_blank">{link.shop}</a>
+                    </li>
+                  );
+                })}
               </ul>
+              <p><small>Affiliate-links: koop je via zo&apos;n link, dan krijgt Gamehelden een kleine commissie.</small></p>
             </section>
           )}
 

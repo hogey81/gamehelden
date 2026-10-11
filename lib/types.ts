@@ -7,6 +7,7 @@ export type Creator = {
   region: string | null;
   bio: string | null;
   setup: SetupItem[];
+  support_code?: string | null;
   channel_id: string | null;
   name: string | null;
   avatar_url: string | null;

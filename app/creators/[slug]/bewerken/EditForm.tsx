@@ -33,7 +33,7 @@ export default function EditForm({ slug, bio, supportCode, setup }: Props) {
       </div>
       <fieldset className="field">
         <legend>Je gaming setup</legend>
-        <p className="hint">Bijvoorbeeld Headset: SteelSeries Arctis Nova 7. Heb je het product op coolblue.nl gevonden? Plak dan de link van die productpagina erbij. Zonder link zoeken we het product op Coolblue.</p>
+        <p className="hint">Kies wat het is en vul merk en model in, bijvoorbeeld Headset: SteelSeries Arctis Nova 7.</p>
         <div className="setup-rows">
           {rows.map((r, i) => (
             <div key={i} className="setup-row">
@@ -42,7 +42,8 @@ export default function EditForm({ slug, bio, supportCode, setup }: Props) {
                 {(KINDS.includes(r.label) || !r.label ? KINDS : [r.label, ...KINDS]).map((k) => <option key={k} value={k}>{k}</option>)}
               </select>
               <input name={`name${i}`} defaultValue={r.name} maxLength={80} placeholder="Merk en model" aria-label={`Onderdeel ${i + 1}: merk en model`} />
-              <input name={`url${i}`} defaultValue={r.url ?? ""} placeholder="coolblue.nl-link (optioneel)" aria-label={`Onderdeel ${i + 1}: Coolblue-link`} inputMode="url" />
+              {/* A product link set earlier (by us, in Supabase) survives the creator's save. */}
+              <input type="hidden" name={`url${i}`} value={r.url ?? ""} />
             </div>
           ))}
         </div>

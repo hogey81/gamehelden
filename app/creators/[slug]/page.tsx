@@ -174,6 +174,8 @@ export default async function CreatorPage({ params, searchParams }: Props) {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={`/badge/${creator.slug}`} alt={`${name} staat op Gamehelden`} height={56} />
             <CopyField label="Code voor je website" value={`<a href="${pageUrl}"><img src="${SITE_URL}/badge/${creator.slug}" alt="${name} staat op Gamehelden" height="56"></a>`} />
+            <p>Wil je je tekst, creator-code of setup aanpassen?</p>
+            <Link className="btn" href={`/creators/${creator.slug}/bewerken`}>Pagina bewerken</Link>
           </section>
         </aside>
       </div>

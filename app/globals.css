@@ -232,3 +232,11 @@ nav .count { display: inline-grid; place-items: center; min-width: 20px; height:
 .support-row { display: flex; gap: 8px; align-items: stretch; }
 .support-row code { flex: 1; min-width: 0; display: grid; place-items: center; padding: 8px; border: 1px dashed var(--muted); border-radius: 8px; background: var(--bg); font: 800 22px var(--display); letter-spacing: 0.06em; overflow-wrap: anywhere; }
 .support-row .btn { border: 0; cursor: pointer; font-family: inherit; min-height: 44px; }
+
+/* Creator edit form */
+.steps { margin: 0; padding-left: 20px; display: grid; gap: 6px; max-width: 65ch; }
+.hint { color: var(--muted); font-size: 14px; margin: 0 0 6px; }
+.setup-rows { display: grid; gap: 10px; }
+.setup-row { display: grid; gap: 6px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) minmax(0, 1.4fr); }
+@media (max-width: 640px) { .setup-row { grid-template-columns: minmax(0, 1fr); padding-bottom: 10px; border-bottom: 1px dashed var(--line); } }
+.badge-panel .btn { justify-self: start; }

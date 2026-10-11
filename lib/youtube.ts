@@ -144,3 +144,9 @@ export async function liveNow(ids: string[]): Promise<LiveInfo[]> {
   }
   return out;
 }
+
+// The channel's own "about" text, used to check a creator owns the channel.
+export async function channelDescription(id: string): Promise<string | null> {
+  const r = await get<{ items?: { snippet: { description?: string } }[] }>("channels", { part: "snippet", id });
+  return r.items?.[0] ? (r.items[0].snippet.description ?? "") : null;
+}

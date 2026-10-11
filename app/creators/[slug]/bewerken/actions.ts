@@ -40,7 +40,8 @@ export async function saveProfile(_prev: EditState, form: FormData): Promise<Edi
   for (let i = 0; i < ROWS; i++) {
     const label = String(form.get(`label${i}`) ?? "").trim().slice(0, 40);
     const name = String(form.get(`name${i}`) ?? "").trim().slice(0, 80);
-    const url = String(form.get(`url${i}`) ?? "").trim();
+    // People paste "coolblue.nl/product/..." or "http://..." too.
+    const url = String(form.get(`url${i}`) ?? "").trim().replace(/^(https?:\/\/)?/, "https://").replace(/^https:\/\/$/, "");
     if (!label && !name) continue;
     if (!label || !name) return { message: "Vul bij elk setup-onderdeel zowel het soort (bijv. Headset) als de naam in." };
     if (url && !/^https:\/\/(www\.)?coolblue\.nl\/\S{1,300}$/.test(url)) {

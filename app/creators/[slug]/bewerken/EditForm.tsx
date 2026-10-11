@@ -5,6 +5,8 @@ import { useActionState } from "react";
 import type { SetupItem } from "@/lib/types";
 import { saveProfile, type EditState } from "./actions";
 
+const KINDS = ["Headset", "Toetsenbord", "Muis", "Controller", "Monitor", "Console", "Pc", "Laptop", "Microfoon", "Webcam", "Stoel", "Muismat", "Anders"];
+
 type Props = { slug: string; bio: string; supportCode: string; setup: SetupItem[] };
 
 export default function EditForm({ slug, bio, supportCode, setup }: Props) {
@@ -31,13 +33,16 @@ export default function EditForm({ slug, bio, supportCode, setup }: Props) {
       </div>
       <fieldset className="field">
         <legend>Je gaming setup</legend>
-        <p className="hint">Bijvoorbeeld Headset: SteelSeries Arctis Nova 7. Een Coolblue-productlink is optioneel; zonder link zoeken we het product op Coolblue.</p>
+        <p className="hint">Bijvoorbeeld Headset: SteelSeries Arctis Nova 7. Heb je het product op coolblue.nl gevonden? Plak dan de link van die productpagina erbij. Zonder link zoeken we het product op Coolblue.</p>
         <div className="setup-rows">
           {rows.map((r, i) => (
             <div key={i} className="setup-row">
-              <input name={`label${i}`} defaultValue={r.label} maxLength={40} placeholder="Soort" aria-label={`Onderdeel ${i + 1}: soort`} />
+              <select name={`label${i}`} defaultValue={r.label} aria-label={`Onderdeel ${i + 1}: soort`}>
+                <option value="">Kies soort…</option>
+                {(KINDS.includes(r.label) || !r.label ? KINDS : [r.label, ...KINDS]).map((k) => <option key={k} value={k}>{k}</option>)}
+              </select>
               <input name={`name${i}`} defaultValue={r.name} maxLength={80} placeholder="Merk en model" aria-label={`Onderdeel ${i + 1}: merk en model`} />
-              <input name={`url${i}`} defaultValue={r.url ?? ""} placeholder="Coolblue-link (optioneel)" aria-label={`Onderdeel ${i + 1}: Coolblue-link`} inputMode="url" />
+              <input name={`url${i}`} defaultValue={r.url ?? ""} placeholder="coolblue.nl-link (optioneel)" aria-label={`Onderdeel ${i + 1}: Coolblue-link`} inputMode="url" />
             </div>
           ))}
         </div>

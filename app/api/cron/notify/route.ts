@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/data";
 import { pushConfigured, sendPush, type PushMessage, type Sub } from "@/lib/push";
-import { liveNow, recentUploadIds, videosById } from "@/lib/youtube";
+import { fetchSnapshot, storeLive } from "@/lib/live";
 
 // Called every 10 minutes by .github/workflows/notify.yml (Vercel Hobby only allows one cron
 // a day). Finds creators who just went live or uploaded and sends a push to their followers.
-// Quota: one playlistItems call per followed creator plus two videos calls per run.
+// Quota: one playlistItems call per creator plus four videos calls per run; the live bar
+// shares this result (see lib/live.ts), so nothing else spends quota for it.
 export const maxDuration = 60;
 export const dynamic = "force-dynamic";
 
@@ -23,44 +24,24 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Supabase, YouTube of VAPID-sleutels zijn niet ingesteld" }, { status: 503 });
   }
 
-  // No followers, no need to spend YouTube quota.
+  // One YouTube pass for everyone; the live bar reads the result from the database too.
+  const { live, uploads, owner } = await fetchSnapshot();
+  await storeLive(live);
+
   const { data: subs, error: subErr } = await sb.from("push_subscriptions").select("endpoint, p256dh, auth, creators");
   if (subErr) throw subErr;
-  if (!subs?.length) return NextResponse.json({ subscribers: 0, sent: 0 });
+  if (!subs?.length) return NextResponse.json({ subscribers: 0, live: live.length, sent: 0 });
   const followed = new Set(subs.flatMap((s) => s.creators));
+  const isFollowed = (id: string) => followed.has(owner.get(id)?.slug ?? "");
 
-  const { data: creators, error } = await sb
-    .from("creators")
-    .select("slug, name, handle, avatar_url, uploads_playlist")
-    .eq("active", true)
-    .not("uploads_playlist", "is", null);
-  if (error) throw error;
-
-  const owner = new Map<string, (typeof creators)[number]>();
-  const failed: string[] = [];
-  await Promise.all(
-    creators
-      .filter((c) => followed.has(c.slug))
-      .map(async (c) => {
-        try {
-          for (const id of await recentUploadIds(c.uploads_playlist, 3)) owner.set(id, c);
-        } catch (e) {
-          failed.push(`${c.slug}: ${(e as Error).message}`);
-        }
-      }),
-  );
-  const ids = [...owner.keys()];
-  if (!ids.length) return NextResponse.json({ subscribers: subs.length, sent: 0, failed });
-
-  const [live, uploads] = await Promise.all([liveNow(ids), videosById(ids)]);
   const cutoff = Date.now() - FRESH_MS;
   const candidates = [
-    ...live.map((l) => ({ kind: "live" as const, id: l.id, title: l.title, thumb: l.thumbnail_url, at: l.started_at })),
+    ...live.filter((l) => isFollowed(l.id)).map((l) => ({ kind: "live" as const, id: l.id, title: l.title, thumb: l.thumbnail_url, at: l.started_at })),
     ...uploads
-      .filter((v) => new Date(v.published_at).getTime() > cutoff)
+      .filter((v) => isFollowed(v.id) && new Date(v.published_at).getTime() > cutoff)
       .map((v) => ({ kind: "video" as const, id: v.id, title: v.title, thumb: v.thumbnail_url, at: v.published_at })),
   ];
-  if (!candidates.length) return NextResponse.json({ subscribers: subs.length, announced: 0, sent: 0, failed });
+  if (!candidates.length) return NextResponse.json({ subscribers: subs.length, announced: 0, sent: 0 });
 
   // Claim each id; only rows that were not announced before come back. A stream that later
   // becomes an upload keeps its id, so it is not announced a second time.
@@ -102,5 +83,5 @@ export async function GET(request: Request) {
   }
   if (gone.size) await sb.from("push_subscriptions").delete().in("endpoint", [...gone]);
 
-  return NextResponse.json({ subscribers: subs.length, announced: isNew.size, sent, removed: gone.size, failed });
+  return NextResponse.json({ subscribers: subs.length, announced: isNew.size, sent, removed: gone.size });
 }

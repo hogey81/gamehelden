@@ -20,7 +20,9 @@ Bezoekers kunnen op `/favorieten` meldingen aanzetten voor de creators die ze vo
 3. Vercel Hobby draait maar één cron per dag, dus `.github/workflows/notify.yml` roept elke 10 minuten `/api/cron/notify` aan. Zet in GitHub (Settings > Secrets and variables > Actions) de secrets `SITE_URL` en `CRON_SECRET`.
 4. Test: zet meldingen aan op `/favorieten` en klik op "Stuur testmelding".
 
-iPhones tonen meldingen alleen als de site aan het beginscherm is toegevoegd. De YouTube-quota-kosten zijn ongeveer 1 eenheid per gevolgde creator per run, dus tel dit bij de live-balk op (samen ruim onder de 10.000 per dag bij zo'n 24 creators).
+iPhones tonen meldingen alleen als de site aan het beginscherm is toegevoegd.
+
+De meldingen-check en de live-balk delen één YouTube-opvraging (elke 10 minuten, opgeslagen in de tabel `site_cache`): ongeveer 1 quota-eenheid per creator per run, zo'n 4.000 van de 10.000 per dag bij 24 creators. Draait de GitHub-workflow niet, dan haalt de live-balk zelf de data op.
 
 ## Een creator toevoegen
 

@@ -19,5 +19,13 @@ create table if not exists push_sent (
   sent_at timestamptz not null default now()
 );
 
+-- Small shared cache: the notify cron stores who is live, the live bar reads it.
+create table if not exists site_cache (
+  key text primary key,
+  value jsonb not null,
+  updated_at timestamptz not null default now()
+);
+
+alter table site_cache enable row level security;
 alter table push_subscriptions enable row level security;
 alter table push_sent enable row level security;

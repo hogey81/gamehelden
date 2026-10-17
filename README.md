@@ -11,6 +11,17 @@ Zonder instellingen draait de site met duidelijk gemarkeerde voorbeelddata en ho
 3. **Vercel:** importeer deze repo en zet bij Settings > Environment Variables de waarden uit `.env.example`.
 4. Vercel roept elke ochtend `/api/cron/sync` aan. Eerste keer handmatig: `curl -H "Authorization: Bearer <CRON_SECRET>" https://<jouw-site>/api/cron/sync`
 
+## Pushmeldingen (live en nieuwe video's)
+
+Bezoekers kunnen op `/favorieten` meldingen aanzetten voor de creators die ze volgen.
+
+1. Voer `supabase/push.sql` uit in de Supabase SQL Editor.
+2. Maak sleutels: `npx web-push generate-vapid-keys`. Zet de publieke sleutel als `NEXT_PUBLIC_VAPID_PUBLIC_KEY`, de private als `VAPID_PRIVATE_KEY` en `VAPID_SUBJECT` (`mailto:jouw@emailadres.nl`) in Vercel, en deploy opnieuw.
+3. Vercel Hobby draait maar één cron per dag, dus `.github/workflows/notify.yml` roept elke 10 minuten `/api/cron/notify` aan. Zet in GitHub (Settings > Secrets and variables > Actions) de secrets `SITE_URL` en `CRON_SECRET`.
+4. Test: zet meldingen aan op `/favorieten` en klik op "Stuur testmelding".
+
+iPhones tonen meldingen alleen als de site aan het beginscherm is toegevoegd. De YouTube-quota-kosten zijn ongeveer 1 eenheid per gevolgde creator per run, dus tel dit bij de live-balk op (samen ruim onder de 10.000 per dag bij zo'n 24 creators).
+
 ## Een creator toevoegen
 
 Voeg in Supabase (Table Editor > creators) een rij toe met `slug`, `handle` (bijv. `@EHVgaming1`) en `games` (bijv. `{fortnite}`). De volgende sync vult de rest. Eigen tekst gaat in `bio`, de setup in `setup` als JSON:

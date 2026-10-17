@@ -240,3 +240,10 @@ nav .count { display: inline-grid; place-items: center; min-width: 20px; height:
 .setup-row { display: grid; gap: 6px; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
 @media (max-width: 640px) { .setup-row { grid-template-columns: minmax(0, 1fr); padding-bottom: 10px; border-bottom: 1px dashed var(--line); } }
 .badge-panel .btn { justify-self: start; }
+
+.push-panel { grid-template-columns: 1fr auto; align-items: center; gap: 16px; margin-bottom: 24px; border: 2px solid var(--accent); }
+.push-panel h2 { margin-bottom: 4px; }
+.push-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.push-note { color: var(--muted); font-size: 14px; margin-top: 6px !important; }
+.btn.ghost { background: transparent; color: var(--ink) !important; border: 1px solid var(--line); }
+@media (max-width: 640px) { .push-panel { grid-template-columns: 1fr; } }

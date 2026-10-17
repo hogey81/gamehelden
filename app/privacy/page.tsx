@@ -7,8 +7,14 @@ export default function Privacy() {
     <section className="prose">
       <h1>Privacybeleid</h1>
       <p>
-        Gamehelden heeft geen accounts en slaat geen persoonsgegevens van bezoekers op. We gebruiken geen trackingcookies van
+        Gamehelden heeft geen accounts en slaat geen persoonsgegevens van bezoekers op, behalve als je meldingen aanzet (zie hieronder). We gebruiken geen trackingcookies van
         onszelf.
+      </p>
+      <h2>Meldingen</h2>
+      <p>
+        Zet je meldingen aan, dan bewaren we het adres dat je browser daarvoor geeft en de lijst creators die je volgt. Daarmee
+        sturen we je een bericht als een van hen live gaat of een video plaatst, en voor niets anders. We koppelen dit niet aan
+        je naam of e-mailadres. Zet je meldingen uit, dan verwijderen we het direct.
       </p>
       <h2>YouTube</h2>
       <p>
